@@ -263,42 +263,46 @@ const SICK_DISHES=[{icon:'🍚',name:'Rasam rice',desc:'Tangy, pepper-forward ra
 
 let dishes={
   breakfast:[
-    {name:'Idli + sambar',tags:['vegetarian'],prep:'',grocery:'urad dal, rice, sambar vegetables, toor dal',recipe:'Soak 1 cup urad dal + 3 cups rice 6 hrs. Grind smooth, ferment overnight. Steam 10-12 min.\nSambar: Cook toor dal, add tamarind water, sambar powder, vegetables, simmer.'},
-    {name:'Dosa + coconut chutney',tags:['vegetarian','needsprep'],prep:'Soak rice & dal the night before. Grind batter and leave to ferment overnight.',grocery:'urad dal, rice, coconut, green chillies',recipe:'Spread batter thin on hot tawa. Drizzle oil. Cook till golden and crisp.\nChutney: Blend coconut, chilli, ginger, salt. Temper with mustard + curry leaves.'},
-    {name:'Pongal + sambar',tags:['vegetarian','highprotein'],prep:'',grocery:'moong dal, rice, ghee, pepper, cumin, cashews',recipe:'Cook moong dal + rice (1:1) with lots of water till very soft.\nTemper with ghee, pepper, cumin, ginger, curry leaves, cashews.'},
-    {name:'Upma',tags:['vegetarian'],prep:'',grocery:'rava, mustard seeds, onions, curry leaves, vegetables',recipe:'Dry roast rava. Sauté mustard, onions, chilli, vegetables. Add water (2:1), salt. Stir in rava, cook 3 min.'},
-    {name:'Rava idli + chutney',tags:['vegetarian'],prep:'',grocery:'rava, curd, eno salt, coconut',recipe:'Mix rava, curd, salt, eno. Rest 5 min. Steam in idli moulds 12 min. Serve with coconut chutney.'},
-    {name:'Egg dosa',tags:['highprotein','needsprep'],prep:'Soak rice & urad dal the night before and grind batter.',grocery:'eggs, dosa batter ingredients',recipe:'Spread dosa batter on tawa. Crack egg on top, spread. Sprinkle salt, pepper. Cover, cook till egg sets.'},
-    {name:'Poha + boiled eggs',tags:['highprotein'],prep:'',grocery:'poha, eggs, onion, peanuts, mustard seeds, turmeric',recipe:'Rinse poha. Temper mustard, curry leaves, onions. Add turmeric, poha, salt, lemon. Top with peanuts. Serve with boiled eggs.'},
-    {name:'Pesarattu + ginger chutney',tags:['vegetarian','highprotein','needsprep'],prep:'Soak green moong dal overnight. Grind batter in the morning before cook arrives.',grocery:'green moong dal, ginger, green chillies',recipe:'Soak moong overnight. Grind with ginger, chilli, cumin, salt. Make thick pancakes on tawa.'},
-    {name:'Oats upma',tags:['vegetarian','highprotein'],prep:'',grocery:'rolled oats, mixed vegetables, mustard seeds, curry leaves',recipe:'Temper mustard, curry leaves, onion, tomato. Add veg, cook. Add oats + water (1:2). Cook 3 min.'},
-    {name:'Paneer paratha',tags:['vegetarian','paneer','highprotein','needsprep'],prep:'Knead wheat dough and prepare spiced paneer filling the night before.',grocery:'paneer, wheat flour, spices, ghee',recipe:'Crumble paneer, mix with chilli, cumin, coriander, salt. Stuff into rolled dough, roll again. Cook on tawa with ghee.'},
+    {name:"Poha + green chutney + boiled egg",tags:["highprotein"],prep:"",grocery:"poha, onion, mustard seeds, curry leaves, turmeric, lemon, green chillies, coriander, peanuts, eggs",recipe:"Rinse poha and drain. Temper mustard seeds, curry leaves, green chilli, onion in oil. Add turmeric, poha, salt, lemon juice. Top with peanuts and coriander.\nGreen chutney: Blend coriander, mint, green chilli, garlic, lemon, salt.\nBoil eggs 9 min, serve on the side."},
+    {name:"Idli + sambar",tags:["vegetarian"],prep:"Order idli batter in advance — keep stocked in fridge.",grocery:"idli batter (order), toor dal, sambar powder, tamarind, tomato, onion, sambar vegetables",recipe:"Steam idli batter in moulds 10-12 min.\nSambar: Cook toor dal soft. Add tamarind water, sambar powder, tomatoes, vegetables. Simmer 10 min. Temper with mustard + curry leaves."},
+    {name:"Dosa + coconut chutney",tags:["vegetarian","needsprep"],prep:"Check dosa batter stock — order if running low. Buy shredded coconut for chutney.",grocery:"dosa batter (order), shredded coconut, green chillies, ginger, mustard seeds, curry leaves, dried red chilli",recipe:"Spread batter thin on hot tawa. Drizzle oil, cook till golden and crisp.\nChutney: Blend shredded coconut, green chilli, ginger, salt with water. Temper with mustard seeds, curry leaves, dried red chilli."},
+    {name:"Upma + peanut chutney",tags:["vegetarian"],prep:"Check upma rava packet stock.",grocery:"upma rava (packet), mustard seeds, curry leaves, onion, green chillies, ginger, peanuts, dried red chilli",recipe:"Dry roast rava till fragrant. Temper mustard, curry leaves, onion, chilli, ginger. Add 2 cups water, salt. Stir in rava, cook 3 min.\nPeanut chutney: Roast peanuts, blend with red chilli, garlic, tamarind, salt. Temper with mustard + curry leaves."},
+    {name:"Egg omelette + bread",tags:["highprotein"],prep:"Keep bread packet stocked.",grocery:"eggs, bread (packet), onion, green chilli, coriander, butter, cheese",recipe:"Beat eggs with chopped onion, green chilli, coriander, salt, pepper. Cook in butter on medium heat. Fold when set.\nToast bread with butter."},
+    {name:"Chicken burger",tags:["chicken","highprotein"],prep:"Buy burger patties and buns — keep patties in freezer.",grocery:"chicken burger patties (ready-made), burger buns, lettuce, tomato, onion, mayo, cheese slices",recipe:"Thaw patty. Pan fry or grill 4-5 min per side.\nToast bun with butter. Assemble with lettuce, tomato, onion, mayo, cheese."},
+    {name:"Paneer sandwich + green chutney",tags:["vegetarian","paneer","highprotein"],prep:"",grocery:"bread (packet), paneer, cheese slices, onion, tomato, capsicum, butter, coriander, mint, green chilli, garlic, lemon",recipe:"Slice or crumble paneer, mix with salt, pepper, chaat masala.\nSpread green chutney on bread. Layer paneer, cheese, sliced vegetables. Grill in sandwich maker or on tawa with butter."},
+    {name:"Chicken sandwich + mayo",tags:["chicken","highprotein"],prep:"Shred chicken the night before if using leftover curry chicken.",grocery:"bread (packet), shredded chicken, mayo, cheese slices, lettuce, onion, tomato, mustard, butter",recipe:"Mix shredded chicken with mayo, salt, pepper, mustard.\nLayer on bread with cheese, lettuce, tomato. Grill or serve cold."},
+    {name:"Rava idli + chutney",tags:["vegetarian"],prep:"Check rava idli mix packet stock.",grocery:"rava idli mix (packet), curd, eno salt, shredded coconut, green chilli, ginger, mustard seeds, curry leaves",recipe:"Mix rava idli mix with curd and water per packet instructions. Add eno, mix quickly. Steam 12-13 min.\nServe with coconut chutney."},
+    {name:"Puttu + banana",tags:["vegetarian"],prep:"Check puttu podi packet stock. Note: Ankita prefers to skip this — make only if Benjamin requests.",grocery:"puttu podi (packet), grated coconut, banana, cardamom",recipe:"Mix puttu podi with water and salt till crumbly. Layer in puttu maker alternating with grated coconut. Steam 5-7 min.\nServe with banana. Ankita usually skips this."},
   ],
   lunch:[
-    {name:'Rice + sambar + poriyal',tags:['vegetarian'],prep:'',grocery:'toor dal, sambar vegetables, seasonal veg for poriyal',recipe:'Sambar with toor dal + tamarind + vegetables. Poriyal: stir-fried veg with coconut and mustard tempering.'},
-    {name:'Chicken curry + rice',tags:['chicken','highprotein','needsprep'],prep:'Marinate chicken with curd, red chilli, turmeric, garam masala the night before.',grocery:'chicken, onions, tomatoes, spices, coconut milk, ginger-garlic',recipe:'Sauté onions golden. Add ginger-garlic, tomatoes, spices. Add marinated chicken, cook 25 min.'},
-    {name:'Paneer masala + rice',tags:['paneer','vegetarian','highprotein'],prep:'',grocery:'paneer, onions, tomatoes, cream, kashmiri chilli',recipe:'Sauté onions, add ginger-garlic, tomatoes, kashmiri chilli. Add paneer + cream. Simmer 5 min.'},
-    {name:'Curd rice + pickle',tags:['vegetarian'],prep:'',grocery:'curd, cooked rice, mustard seeds, curry leaves, pickle',recipe:'Mix warm rice with curd. Temper mustard, dried chilli, curry leaves, ginger. Mix in. Serve with pickle.'},
-    {name:'Egg curry + rice',tags:['highprotein'],prep:'',grocery:'eggs, onions, tomatoes, coconut milk, spices',recipe:'Hard boil eggs. Make onion-tomato gravy. Slit and add eggs. Simmer with coconut milk 5 min.'},
-    {name:'Chicken biryani',tags:['chicken','highprotein','needsprep'],prep:'Marinate chicken overnight. Fry onions and soak basmati the night before.',grocery:'basmati rice, chicken, whole spices, saffron, fried onions, mint, curd',recipe:'Layer par-cooked basmati over marinated chicken. Seal and dum-cook on low heat 25-30 min.'},
-    {name:'Paneer butter masala + rice',tags:['paneer','vegetarian','highprotein'],prep:'',grocery:'paneer, butter, cream, tomatoes, cashews, kasuri methi',recipe:'Blend roasted tomatoes, onion, cashews. Cook in butter with spices. Add paneer + cream. Finish with kasuri methi.'},
-    {name:'Fish curry + rice',tags:['highprotein','needsprep'],prep:'Clean and marinate fish with turmeric and chilli the morning of cooking.',grocery:'fish (pomfret or mackerel), coconut, tamarind, spices',recipe:'Sauté onions, coconut paste, tamarind, chilli. Add water, bring to boil. Slide in fish. Cook 10-12 min gently.'},
-    {name:'Dal + jeera rice',tags:['vegetarian','highprotein'],prep:'',grocery:'toor dal, cumin, ghee, garlic, turmeric',recipe:'Cook toor dal soft. Temper with ghee, cumin, garlic, chilli. Serve with cumin rice.'},
-    {name:'Kootu + rice',tags:['vegetarian'],prep:'',grocery:'chana dal, mixed vegetables, coconut, mustard',recipe:'Cook chana dal + vegetables. Grind coconut with cumin. Mix. Temper with mustard, dried chilli.'},
-    {name:'Rajma chawal',tags:['vegetarian','highprotein','needsprep'],prep:'Soak rajma (kidney beans) overnight.',grocery:'rajma, onions, tomatoes, spices, ginger-garlic',recipe:'Pressure cook soaked rajma. Sauté onions, tomatoes, spices. Add rajma + water, simmer 15 min.'},
-    {name:'Rasam + rice + papad',tags:['vegetarian'],prep:'',grocery:'tamarind, tomato, pepper, cumin, garlic, toor dal',recipe:'Boil tomato + tamarind + pepper + cumin + garlic. Add thin cooked dal. Temper with mustard + dried chilli.'},
+    {name:"Rice + sambar + poriyal",tags:["vegetarian"],prep:"",grocery:"rice, toor dal, sambar powder, tamarind, tomato, sambar vegetables, seasonal vegetable for poriyal, coconut",recipe:"Cook rice. Sambar: cook toor dal, add tamarind water, sambar powder, vegetables, simmer.\nPoriyal: stir-fry chosen vegetable with mustard, curry leaves, dried chilli, grated coconut.\nPoriyal options: beans, carrot, cabbage, beetroot, spinach."},
+    {name:"Chicken curry + rice",tags:["chicken","highprotein","needsprep"],prep:"Buy chicken. Marinate with curd, red chilli, turmeric, garam masala the night before.",grocery:"chicken, onion, tomato, ginger-garlic paste, red chilli powder, coriander powder, garam masala, curd, coconut milk, rice",recipe:"Sauté onions golden. Add ginger-garlic, tomatoes, spices. Add marinated chicken, cook 25 min. Finish with coconut milk and coriander."},
+    {name:"Egg curry + rice + poriyal",tags:["highprotein"],prep:"",grocery:"eggs, onion, tomato, coconut milk, spices, basmati rice, seasonal vegetable for poriyal",recipe:"Hard boil eggs. Make onion-tomato gravy with spices and coconut milk. Slit eggs and add, simmer 5 min.\nServe with basmati rice and poriyal of choice."},
+    {name:"Chicken biryani + raita",tags:["chicken","highprotein","needsprep"],prep:"Buy chicken. Marinate overnight with curd, whole spices, saffron, fried onions. Soak basmati 30 min before cooking.",grocery:"chicken, basmati rice, whole spices, saffron, fried onions, mint, coriander, curd, ghee, cucumber, onion for raita",recipe:"Layer par-cooked basmati over marinated chicken. Seal and dum cook on low 25-30 min.\nRaita: mix curd with grated cucumber, onion, cumin powder, salt."},
+    {name:"Paneer curry + pulao",tags:["paneer","vegetarian","highprotein"],prep:"Buy paneer.",grocery:"paneer, onion, tomato, cream, kashmiri chilli, spices, basmati rice, whole spices, ghee, peas",recipe:"Sauté onions, add ginger-garlic, tomatoes, kashmiri chilli, spices. Add paneer + cream. Simmer 5 min.\nPulao: sauté whole spices in ghee, add soaked basmati, water, salt, peas. Cook till done."},
+    {name:"Dal tadka + jeera rice + poriyal",tags:["vegetarian","highprotein"],prep:"",grocery:"toor dal, ghee, cumin, garlic, dried red chilli, tomato, basmati rice, seasonal vegetable for poriyal",recipe:"Cook toor dal soft. Smoky tadka: ghee + cumin + garlic + dried chilli — pour over dal.\nJeera rice: fry cumin in ghee, add soaked basmati, water, salt.\nPoriyal: stir-fry seasonal vegetable with coconut."},
+    {name:"Rajma rice",tags:["vegetarian","highprotein","needsprep"],prep:"Soak rajma overnight.",grocery:"rajma (kidney beans), onion, tomato, ginger-garlic paste, spices, basmati rice",recipe:"Pressure cook soaked rajma. Sauté onions golden, add tomatoes, spices. Add rajma + water, simmer 15 min till thick.\nServe with basmati rice."},
+    {name:"Moor curry + chicken fry + poriyal",tags:["chicken","highprotein"],prep:"Buy chicken. Marinate with spices morning of cooking.",grocery:"curd, green chilli, ginger, cumin, turmeric, coconut, chicken, red chilli powder, pepper, curry leaves, seasonal vegetable for poriyal",recipe:"Moor curry: blend curd with coconut, green chilli, ginger, cumin. Heat gently — do not boil. Temper with mustard + curry leaves.\nChicken fry: marinate chicken with red chilli, pepper, turmeric, curry leaves. Shallow fry till crispy.\nServe with poriyal."},
+    {name:"Curry leaves rice + vegetable fry",tags:["vegetarian"],prep:"",grocery:"rice, curry leaves, dried red chilli, urad dal, chana dal, peppercorns, ghee, seasonal vegetable for fry",recipe:"Curry leaves rice: dry roast curry leaves, red chilli, peppercorns, urad dal. Grind coarse. Mix into cooked rice with ghee and salt.\nVegetable fry options: potato fry, yam fry, ivy gourd, ladies finger."},
+    {name:"Tamarind rice + vegetable fry + chicken roast",tags:["chicken","highprotein"],prep:"Buy chicken. Marinate morning of cooking.",grocery:"rice, tamarind, mustard seeds, curry leaves, dried red chilli, peanuts, sesame seeds, jaggery, seasonal vegetable, chicken, spices",recipe:"Tamarind rice: make thick tamarind paste with spices. Mix into cooked rice with tempered mustard, curry leaves, peanuts.\nChicken roast: slow cook chicken with onion, tomato, spices till dry and roasted."},
+    {name:"Rasam rice + potato fry",tags:["vegetarian","sickday"],prep:"",grocery:"tamarind, tomato, pepper, cumin, garlic, toor dal, curry leaves, potato, mustard seeds, red chilli",recipe:"Rasam: boil tomato + tamarind + pepper + cumin + garlic. Add thin cooked dal. Temper with mustard + dried chilli. Mix into soft rice.\nPotato fry: cube potatoes, roast with mustard, red chilli, turmeric till crispy.\nGreat sick day meal — clearing and comforting."},
+    {name:"Ghee rice + chicken roast + raita",tags:["chicken","highprotein"],prep:"Buy chicken. Marinate morning of cooking.",grocery:"basmati rice, ghee, whole spices, onion, chicken, spices for roast, curd, cucumber for raita",recipe:"Ghee rice: fry sliced onions golden in ghee. Add whole spices, soaked basmati, water, salt. Cook till done.\nChicken roast: slow cook with onion, tomato, spices till dry.\nRaita: curd + cucumber + cumin + salt."},
+    {name:"Palak paneer + rice + raita",tags:["paneer","vegetarian","highprotein"],prep:"Buy paneer and fresh spinach.",grocery:"spinach, paneer, cream, onion, tomato, garlic, ginger, spices, rice, curd, cucumber for raita",recipe:"Blanch spinach, blend smooth. Sauté cumin, garlic, ginger, onion, tomato. Add spinach purée, spices, paneer, cream. Simmer 5 min.\nServe with plain rice and raita."},
   ],
   dinner:[
-    {name:'Palak paneer + phulka',tags:['paneer','vegetarian','highprotein'],prep:'',grocery:'spinach, paneer, cream, spices, wheat flour',recipe:'Blanch spinach, blend smooth. Sauté cumin, garlic, ginger. Add purée, spices, paneer, cream. Simmer 5 min.'},
-    {name:'Grilled chicken + salad',tags:['chicken','highprotein','needsprep'],prep:'Marinate chicken breast overnight in olive oil, lemon, garlic, herbs.',grocery:'chicken breast, olive oil, lemon, salad vegetables',recipe:'Grill marinated chicken 6-7 min per side. Rest 3 min. Slice and serve with dressed salad.'},
-    {name:'Paneer tikka + salad',tags:['paneer','vegetarian','highprotein','needsprep'],prep:'Marinate cubed paneer in hung curd and spices 2 hours before dinner.',grocery:'paneer, hung curd, bell peppers, onions, chilli powder, chaat masala',recipe:'Skewer marinated paneer + veg. Grill on high heat till charred. Serve with green chutney + salad.'},
-    {name:'Vegetable khichdi',tags:['vegetarian'],prep:'',grocery:'moong dal, rice, mixed vegetables, ghee, cumin',recipe:'Pressure cook moong dal + rice + vegetables with turmeric, salt. Tadka of ghee + cumin + asafoetida.'},
-    {name:'Egg bhurji + toast',tags:['highprotein'],prep:'',grocery:'eggs, onions, tomatoes, green chilli, butter, bread',recipe:'Scramble eggs with onion, tomato, chilli, coriander, salt + pepper in butter. Serve with buttered toast.'},
-    {name:'Dal tadka + rice',tags:['vegetarian','highprotein'],prep:'',grocery:'toor dal, ghee, cumin, garlic, dried chilli, tomato',recipe:'Cook toor dal soft. Smoky tadka: ghee + cumin + garlic + dried chilli, pour over dal.'},
-    {name:'Chicken soup + bread',tags:['chicken','highprotein'],prep:'',grocery:'chicken pieces, carrot, ginger, garlic, pepper, bread',recipe:'Simmer chicken with vegetables, ginger, garlic, pepper 40 min. Strain broth, shred chicken, season.'},
-    {name:'Paneer fried rice',tags:['paneer','vegetarian','highprotein'],prep:'',grocery:'cooked rice, paneer, soy sauce, vegetables, eggs, spring onion',recipe:'Fry cubed paneer golden. Scramble eggs. Stir-fry veg on high heat. Add rice, soy sauce, salt. Toss.'},
-    {name:'Mixed veg curry + rice',tags:['vegetarian'],prep:'',grocery:'seasonal vegetables, coconut milk, onions, tomatoes, spices',recipe:'Sauté onions, tomatoes, spices. Add veg. Pour coconut milk, simmer 15 min.'},
-    {name:'Rasam + rice (light)',tags:['vegetarian'],prep:'',grocery:'tamarind, tomatoes, pepper, cumin, garlic',recipe:'Light thin rasam. Boil tomato + tamarind with pepper, cumin, garlic, curry leaves. Temper. Pour over rice.'},
+    {name:"Palak paneer + phulka",tags:["paneer","vegetarian","highprotein"],prep:"Buy paneer and fresh spinach.",grocery:"spinach, paneer, cream, onion, tomato, garlic, ginger, spices, wheat flour, ghee",recipe:"Blanch spinach, blend smooth. Sauté cumin, garlic, ginger, onion, tomato. Add spinach purée, spices, paneer, cream. Simmer 5 min.\nPhulka: knead soft dough, roll thin, cook on tawa then briefly on flame."},
+    {name:"Grilled chicken + salad + fries",tags:["chicken","highprotein"],prep:"Order grilled chicken from Licious in advance.",grocery:"grilled chicken (order from Licious), lettuce, tomato, cucumber, onion, lemon, olive oil, potato, oil for frying",recipe:"Order grilled chicken from Licious.\nSalad: toss lettuce, tomato, cucumber, onion with lemon + olive oil + salt.\nFries: cut potatoes thin, fry till golden and crispy, season with salt and pepper."},
+    {name:"Paneer tikka + onion + capsicum + chutney",tags:["paneer","vegetarian","highprotein","needsprep"],prep:"Buy paneer. Marinate cubed paneer in hung curd and spices 2 hours before dinner.",grocery:"paneer, hung curd, capsicum, onion, red chilli powder, chaat masala, cumin, lemon, coriander, mint, green chilli for chutney",recipe:"Marinate paneer + capsicum + onion in hung curd + spices 2 hrs. Skewer and grill on high heat or tawa till charred.\nGreen chutney: blend coriander, mint, green chilli, garlic, lemon, salt."},
+    {name:"Egg bhurji + toast",tags:["highprotein"],prep:"Keep bread packet stocked.",grocery:"eggs, onion, tomato, green chilli, coriander, butter, bread (packet), cheese",recipe:"Scramble eggs with finely chopped onion, tomato, green chilli, coriander, salt, pepper in butter. Keep slightly soft.\nToast bread with butter. Serve hot."},
+    {name:"Paneer bhurji + chapati",tags:["paneer","vegetarian","highprotein"],prep:"Buy paneer.",grocery:"paneer, onion, tomato, capsicum, green chilli, spices, coriander, wheat flour, ghee",recipe:"Crumble paneer. Sauté onion, tomato, capsicum, chilli. Add crumbled paneer, spices, coriander. Cook 3 min.\nChapati: knead soft wheat dough, roll thin, cook on tawa with ghee."},
+    {name:"Chicken soup + bread",tags:["chicken","highprotein","sickday"],prep:"",grocery:"chicken pieces or bones, carrot, onion, ginger, garlic, pepper, bay leaf, bread (packet), butter",recipe:"Simmer chicken with vegetables, ginger, garlic, pepper, bay leaf in water 40 min. Strain broth, shred chicken, add back. Season.\nServe with buttered bread. Great sick day meal."},
+    {name:"Chicken curry + chapati",tags:["chicken","highprotein","needsprep"],prep:"Buy chicken. Marinate with curd and spices the night before.",grocery:"chicken, onion, tomato, ginger-garlic paste, spices, curd, wheat flour, ghee",recipe:"Sauté onions golden. Add ginger-garlic, tomatoes, spices. Add marinated chicken, cook 25 min.\nChapati: knead soft wheat dough, roll thin, cook on tawa with ghee."},
+    {name:"Egg curry + chapati",tags:["highprotein"],prep:"",grocery:"eggs, onion, tomato, coconut milk, spices, wheat flour, ghee",recipe:"Hard boil eggs. Make onion-tomato-coconut milk gravy. Slit eggs and simmer in gravy 5 min.\nChapati: knead soft wheat dough, roll thin, cook on tawa with ghee."},
+    {name:"Chicken roast + chapati",tags:["chicken","highprotein","needsprep"],prep:"Buy chicken. Marinate with spices morning of cooking.",grocery:"chicken, onion, tomato, ginger-garlic paste, pepper, spices, curry leaves, wheat flour, ghee",recipe:"Slow cook chicken with onion, tomato, spices on low heat till dry and roasted with slightly crispy edges.\nChapati: knead soft wheat dough, roll thin, cook on tawa with ghee."},
+    {name:"Dal + phulka + ladies finger fry",tags:["vegetarian","highprotein"],prep:"",grocery:"toor dal, ghee, cumin, garlic, tomato, dried red chilli, wheat flour, ladies finger (okra), mustard seeds, red chilli powder",recipe:"Cook toor dal soft. Tadka: ghee + cumin + garlic + dried chilli.\nPhulka: knead soft dough, roll thin, cook on tawa then flame.\nLadies finger fry: slice okra, stir-fry with mustard, red chilli, turmeric till crispy."},
+    {name:"Paneer curry + chapati",tags:["paneer","vegetarian","highprotein"],prep:"Buy paneer.",grocery:"paneer, onion, tomato, cream, kashmiri chilli, spices, kasuri methi, wheat flour, ghee",recipe:"Sauté onions, add ginger-garlic, tomatoes, kashmiri chilli, spices. Add paneer + cream. Finish with kasuri methi.\nChapati: knead soft wheat dough, roll thin, cook on tawa with ghee."},
+    {name:"Chapati + aloo gobi sabzi",tags:["vegetarian"],prep:"",grocery:"wheat flour, ghee, potato, cauliflower, onion, tomato, cumin, coriander powder, turmeric, red chilli, amchur",recipe:"Aloo gobi: sauté cumin, onion, tomato. Add cubed potato and cauliflower with spices. Cook covered 15 min till tender.\nChapati: knead soft wheat dough, roll thin, cook on tawa with ghee."},
+    {name:"Aloo paratha",tags:["vegetarian"],prep:"",grocery:"wheat flour, potato, green chilli, coriander, cumin, amchur, ghee, curd or pickle to serve",recipe:"Boil and mash potatoes. Mix with green chilli, coriander, cumin, amchur, salt.\nStuff into rolled dough discs, seal, roll again. Cook on tawa with generous ghee till golden both sides.\nServe with curd or pickle."},
   ]
 };
 
@@ -412,7 +416,7 @@ async function generateMenu(){
   const dishNames={breakfast:dishes.breakfast.map(d=>d.name),lunch:dishes.lunch.map(d=>d.name),dinner:dishes.dinner.map(d=>d.name)};
 
   const systemPrompt=`You are a smart meal planner for a South Indian household in Bengaluru, India.
-Household: Ankita (loves paneer, health-conscious, gets bored easily) and Benjamin (loves chicken, health-conscious).
+Household: Ankita (loves paneer, health-conscious, gets bored easily, dislikes chapati as a standalone dinner — only include chapati when paired with a proper main dish like paneer curry or chicken curry) and Benjamin (loves chicken, health-conscious). Ankita dislikes Puttu — only schedule it if specifically requested.
 Cook comes Mon-Sat 8-9:30 AM. MAX 4 dishes per day total across all meals. Sunday cook is off.
 Rules:
 1. Max 4 cook dishes per day TOTAL (breakfast+lunch+dinner combined). Shared dishes count once.
@@ -510,6 +514,60 @@ function renderGrocery(){
   el.innerHTML=`<div class="alert alert-info" style="margin-bottom:16px">${items.length} items needed this week — tap to check off as you buy</div><div class="grocery-grid">${items.map(item=>`<label class="grocery-item"><input type="checkbox" onchange="this.closest('.grocery-item').classList.toggle('checked',this.checked)"><span>${item}</span></label>`).join('')}</div>`;
 }
 
+// Load saved dishes from localStorage
+function loadDishes() {
+  try {
+    const saved = localStorage.getItem('ankita_dishes');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (parsed.breakfast && parsed.lunch && parsed.dinner) {
+        dishes = parsed;
+      }
+    }
+  } catch(e) { console.log('Could not load saved dishes'); }
+}
+
+function saveDishes() {
+  try {
+    localStorage.setItem('ankita_dishes', JSON.stringify(dishes));
+  } catch(e) { console.log('Could not save dishes'); }
+}
+
+// Patch addDish and removeDish to auto-save
+const _origAddDish = addDish;
+addDish = function() {
+  const name = document.getElementById('nd-name').value.trim();
+  if (!name) return;
+  const cat = document.getElementById('nd-cat').value;
+  const tags = [];
+  if(document.getElementById('t-veg').checked) tags.push('vegetarian');
+  if(document.getElementById('t-protein').checked) tags.push('highprotein');
+  if(document.getElementById('t-paneer').checked) tags.push('paneer');
+  if(document.getElementById('t-chicken').checked) tags.push('chicken');
+  if(document.getElementById('t-prep').checked) tags.push('needsprep');
+  const prep = document.getElementById('nd-prep').value.trim();
+  const grocery = document.getElementById('nd-grocery').value.trim();
+  const recipe = document.getElementById('nd-recipe').value.trim();
+  dishes[cat].push({name,tags,prep,grocery,recipe});
+  document.getElementById('nd-name').value='';
+  document.getElementById('nd-prep').value='';
+  document.getElementById('nd-grocery').value='';
+  document.getElementById('nd-recipe').value='';
+  ['t-veg','t-protein','t-paneer','t-chicken','t-prep'].forEach(id=>document.getElementById(id).checked=false);
+  saveDishes();
+  renderDishLibrary();
+  refreshWeeklyChips();
+}
+
+const _origRemoveDish = removeDish;
+removeDish = function(cat, idx) {
+  dishes[cat].splice(idx,1);
+  saveDishes();
+  renderDishLibrary();
+  refreshWeeklyChips();
+}
+
+loadDishes();
 renderDishLibrary();refreshWeeklyChips();renderSickDay();renderRecipes();
 </script>
 </body>
