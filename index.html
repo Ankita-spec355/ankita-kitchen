@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ankita's Kitchen Planner</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#faf7f2;--warm:#f5ede0;--terracotta:#c4633a;--terracotta-light:#e8956d;--terracotta-dark:#9b4a27;--sage:#7a9e7e;--sage-light:#a8c5ab;--charcoal:#2c2420;--brown:#6b4c3b;--muted:#9b8b7e;--border:rgba(107,76,59,0.15);--card:rgba(255,255,255,0.7);--shadow:0 2px 20px rgba(44,36,32,0.08)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh;font-size:14px;line-height:1.6}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 0%,rgba(196,99,58,0.06) 0%,transparent 50%),radial-gradient(ellipse at 80% 100%,rgba(122,158,126,0.06) 0%,transparent 50%);pointer-events:none;z-index:0}
+nav{position:sticky;top:0;z-index:100;background:rgba(250,247,242,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:0}
+.nav-brand{font-family:'Playfair Display',serif;font-size:18px;color:var(--terracotta);padding:16px 0;margin-right:32px;white-space:nowrap}
+.nav-brand span{font-style:italic}
+.nav-tabs{display:flex;gap:0;overflow-x:auto;flex:1}
+.nav-tab{padding:18px 16px;font-size:13px;font-weight:400;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;letter-spacing:.01em}
+.nav-tab:hover{color:var(--charcoal)}
+.nav-tab.active{color:var(--terracotta);border-bottom-color:var(--terracotta);font-weight:500}
+main{max-width:1100px;margin:0 auto;padding:32px 24px;position:relative;z-index:1}
+.panel{display:none;animation:fadeIn .3s ease}
+.panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.page-header{margin-bottom:32px}
+.page-title{font-family:'Playfair Display',serif;font-size:32px;color:var(--charcoal);margin-bottom:6px}
+.page-title em{color:var(--terracotta);font-style:italic}
+.page-sub{font-size:14px;color:var(--muted);font-weight:300}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;backdrop-filter:blur(4px)}
+.card+.card{margin-top:12px}
+.card-title{font-family:'Playfair Display',serif;font-size:17px;margin-bottom:14px;color:var(--charcoal)}
+input[type=text],textarea,select{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,0.8);color:var(--charcoal);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color .2s}
+input[type=text]:focus,textarea:focus,select:focus{border-color:var(--terracotta-light)}
+textarea{resize:vertical;min-height:90px;line-height:1.6}
+.btn{padding:9px 18px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;border:1px solid var(--border);background:white;color:var(--charcoal)}
+.btn:hover{background:var(--warm)}
+.btn-primary{background:var(--terracotta);color:white;border-color:var(--terracotta)}
+.btn-primary:hover{background:var(--terracotta-dark)}
+.btn-sm{padding:5px 12px;font-size:12px;border-radius:8px}
+.btn-danger{color:#c44;border-color:#fcc}
+.btn-danger:hover{background:#fff5f5}
+.btn-wide{width:100%;padding:12px;font-size:14px}
+.tag{display:inline-flex;align-items:center;font-size:11px;padding:2px 9px;border-radius:20px;font-weight:500;margin:2px}
+.tag-veg{background:#edf7ee;color:#3a7a3e;border:1px solid #b8ddb9}
+.tag-protein{background:#e8f1fb;color:#2a5fa8;border:1px solid #b8d0f0}
+.tag-paneer{background:#fef3e8;color:#b05a1a;border:1px solid #f5cfa0}
+.tag-chicken{background:#fdedf0;color:#9b2d3a;border:1px solid #f0b8c0}
+.tag-prep{background:#fdf3e8;color:#9b6a1a;border:1px solid #f0d0a0}
+.section-label{font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin:24px 0 12px}
+.dish-row{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.dish-row:last-child{border-bottom:none}
+.dish-info{flex:1}
+.dish-name{font-weight:500;font-size:14px;margin-bottom:4px}
+.dish-prep-note{font-size:12px;color:var(--muted);margin-top:4px}
+.add-dish-form{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.add-dish-form .full{grid-column:1/-1}
+.checkbox-group{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.check-label{display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer}
+.check-label input{accent-color:var(--terracotta);width:15px;height:15px}
+.pref-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.chip-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{padding:5px 13px;border-radius:20px;font-size:12px;border:1px solid var(--border);background:white;cursor:pointer;transition:all .2s;color:var(--brown)}
+.chip:hover{border-color:var(--terracotta-light)}
+.chip.on{background:var(--terracotta);color:white;border-color:var(--terracotta)}
+.chip.on-avoid{background:#fee;color:#c44;border-color:#fcc}
+.chip.on-day{background:var(--sage);color:white;border-color:var(--sage)}
+.field-label{font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:500}
+.menu-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.menu-stats{display:flex;gap:10px;flex-wrap:wrap}
+.stat-pill{background:white;border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:12px;color:var(--brown)}
+.stat-pill strong{color:var(--terracotta)}
+.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:24px;overflow-x:auto}
+.day-col{background:white;border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:transform .15s;min-width:120px}
+.day-col:hover{transform:translateY(-2px)}
+.day-hd{padding:10px 12px;background:var(--warm);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.day-name{font-weight:600;font-size:13px;color:var(--charcoal)}
+.day-count{font-size:10px;color:var(--muted);background:white;padding:1px 7px;border-radius:10px;border:1px solid var(--border)}
+.day-count.over{color:#c44;background:#fff5f5;border-color:#fcc}
+.meal-block{padding:8px 12px;border-bottom:1px solid var(--border)}
+.meal-block:last-child{border-bottom:none}
+.meal-type{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
+.meal-dish{font-size:11px;color:var(--charcoal);line-height:1.4}
+.meal-dish.outside{color:var(--sage);font-style:italic}
+.meal-dish.prep-needed{color:var(--terracotta-dark)}
+.cook-tasks-row{font-size:10px;color:var(--terracotta-dark);margin-top:3px;font-style:italic}
+.day-col.sunday .day-hd{background:#f0ede8}
+.alert{border-radius:12px;padding:14px 18px;margin-bottom:10px;border:1px solid;font-size:13px}
+.alert-warn{background:#fef9f0;border-color:#f0d5a0;color:#7a5520}
+.alert-info{background:#f0f5fe;border-color:#b0c8f0;color:#1a3a7a}
+.alert-success{background:#f0f7f0;border-color:#a8d0aa;color:#2a5a2e}
+.alert-sick{background:#f5f0fe;border-color:#c8a8f0;color:#4a1a7a}
+.prep-card{border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;background:white}
+.prep-day{font-size:11px;font-weight:600;color:var(--terracotta);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
+.prep-dish{font-size:14px;font-weight:500;margin-bottom:4px}
+.prep-note{font-size:13px;color:var(--muted)}
+.grocery-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grocery-item{display:flex;align-items:center;gap:10px;padding:10px 14px;background:white;border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s}
+.grocery-item:hover{border-color:var(--terracotta-light)}
+.grocery-item.checked{opacity:.45;text-decoration:line-through}
+.grocery-item input[type=checkbox]{accent-color:var(--terracotta);width:16px;height:16px;flex-shrink:0}
+.recipe-card{background:white;border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:12px}
+.recipe-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.recipe-name{font-family:'Playfair Display',serif;font-size:18px}
+.recipe-body{font-size:13px;color:var(--brown);line-height:1.8;white-space:pre-wrap;border-top:1px solid var(--border);padding-top:12px}
+.sick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.sick-card{background:white;border:1px solid #d0b0f0;border-radius:14px;padding:18px;transition:transform .15s}
+.sick-card:hover{transform:translateY(-2px)}
+.sick-icon{font-size:28px;margin-bottom:10px}
+.sick-name{font-family:'Playfair Display',serif;font-size:16px;margin-bottom:6px}
+.sick-desc{font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.6}
+.sick-for{font-size:11px;color:#6a2d9b;background:#f5f0fe;padding:4px 10px;border-radius:20px;display:inline-block}
+.loading-state{text-align:center;padding:48px;color:var(--muted)}
+.spinner{width:32px;height:32px;border:2px solid var(--warm);border-top-color:var(--terracotta);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty-state{text-align:center;padding:48px 24px;color:var(--muted)}
+.empty-icon{font-size:40px;margin-bottom:12px;opacity:.5}
+.empty-text{font-size:14px}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+@media(max-width:768px){.week-grid{grid-template-columns:repeat(4,1fr)}.pref-grid{grid-template-columns:1fr}.add-dish-form{grid-template-columns:1fr}.grocery-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-brand">Ankita's <span>Kitchen</span></div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="switchTab('dishes',this)">Dish library</button>
+      <button class="nav-tab" onclick="switchTab('weekly',this)">This week's mood</button>
+      <button class="nav-tab" onclick="switchTab('menu',this)">Weekly menu</button>
+      <button class="nav-tab" onclick="switchTab('alerts',this)">Prep alerts</button>
+      <button class="nav-tab" onclick="switchTab('grocery',this)">Groceries</button>
+      <button class="nav-tab" onclick="switchTab('recipes',this)">Recipes</button>
+      <button class="nav-tab" onclick="switchTab('sickday',this)">Sick day</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<div id="tab-dishes" class="panel active">
+  <div class="page-header">
+    <div class="page-title">Dish <em>library</em></div>
+    <div class="page-sub">Everything your cook can make — add, tag and organise your go-to dishes</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Add a new dish</div>
+    <div class="add-dish-form">
+      <input type="text" id="nd-name" placeholder="Dish name (e.g. Paneer masala)">
+      <select id="nd-cat"><option value="breakfast">Breakfast</option><option value="lunch">Lunch</option><option value="dinner">Dinner</option></select>
+      <div class="full">
+        <div class="checkbox-group">
+          <span style="font-size:13px;color:var(--muted)">Tags:</span>
+          <label class="check-label"><input type="checkbox" id="t-veg"> Vegetarian</label>
+          <label class="check-label"><input type="checkbox" id="t-protein"> High protein</label>
+          <label class="check-label"><input type="checkbox" id="t-paneer"> Paneer</label>
+          <label class="check-label"><input type="checkbox" id="t-chicken"> Chicken</label>
+          <label class="check-label"><input type="checkbox" id="t-prep"> Needs prep</label>
+        </div>
+      </div>
+      <input type="text" id="nd-prep" placeholder="Prep note — what needs doing the night before?">
+      <input type="text" id="nd-grocery" placeholder="Key groceries (comma separated)">
+      <div class="full"><textarea id="nd-recipe" placeholder="Quick recipe / method (optional)" style="min-height:70px"></textarea></div>
+    </div>
+    <button class="btn btn-primary" onclick="addDish()">Add dish to library</button>
+  </div>
+  <div id="dish-library-content"></div>
+</div>
+
+<div id="tab-weekly" class="panel">
+  <div class="page-header">
+    <div class="page-title">This week's <em>mood</em></div>
+    <div class="page-sub">Tell the AI what you're feeling — it'll build the perfect menu around you</div>
+  </div>
+  <div class="pref-grid">
+    <div>
+      <div class="card">
+        <div class="card-title">How are you feeling this week?</div>
+        <div class="field-label">Describe your mood, cravings, energy levels…</div>
+        <textarea id="pref-mood" placeholder="e.g. Craving something light. Benjamin wants chicken twice. Feeling lazy so nothing too complex. Would love more paneer!"></textarea>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="card-title">Outside food days</div>
+        <div class="field-label">Mark days you plan to order out (max 2 recommended)</div>
+        <div class="chip-wrap" id="outside-days">
+          <span class="chip" data-type="day" onclick="toggleChip(this)">Mon</span>
+          <span class="chip" data-type="day" onclick="toggleChip(this)">Tue</span>
+          <span class="chip" data-type="day" onclick="toggleChip(this)">Wed</span>
+          <span class="chip" data-type="day" onclick="toggleChip(this)">Thu</span>
+          <span class="chip" data-type="day" onclick="toggleChip(this)">Fri</span>
+          <span class="chip" data-type="day" onclick="toggleChip(this)">Sat</span>
+          <span class="chip" data-type="day" onclick="toggleChip(this)">Sun</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title">Must include this week</div>
+        <div class="field-label">Tap dishes you definitely want</div>
+        <div class="chip-wrap" id="must-include-wrap"></div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="card-title">Avoid this week</div>
+        <div class="field-label">Tap dishes to skip</div>
+        <div class="chip-wrap" id="avoid-wrap"></div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:20px">
+    <button class="btn btn-primary btn-wide" onclick="generateMenu()">Generate this week's menu with AI →</button>
+  </div>
+</div>
+
+<div id="tab-menu" class="panel">
+  <div class="page-header">
+    <div class="page-title">This week's <em>menu</em></div>
+    <div class="page-sub">AI-generated plan — what the cook makes each day, what needs prep</div>
+  </div>
+  <div id="menu-content"><div class="empty-state"><div class="empty-icon">🍽</div><div class="empty-text">Go to "This week's mood" and generate your menu first</div></div></div>
+</div>
+
+<div id="tab-alerts" class="panel">
+  <div class="page-header">
+    <div class="page-title">Prep <em>alerts</em></div>
+    <div class="page-sub">What needs to be done the night before — for you or the maid</div>
+  </div>
+  <div id="alerts-content"><div class="empty-state"><div class="empty-icon">⏰</div><div class="empty-text">Generate a menu first to see prep alerts</div></div></div>
+</div>
+
+<div id="tab-grocery" class="panel">
+  <div class="page-header">
+    <div class="page-title">Grocery <em>list</em></div>
+    <div class="page-sub">Everything you need to buy this week — tap to check off</div>
+  </div>
+  <div id="grocery-content"><div class="empty-state"><div class="empty-icon">🛒</div><div class="empty-text">Generate a menu first to build your grocery list</div></div></div>
+</div>
+
+<div id="tab-recipes" class="panel">
+  <div class="page-header">
+    <div class="page-title">Recipes</div>
+    <div class="page-sub">Quick-reference methods for every dish in your library</div>
+  </div>
+  <input type="text" id="recipe-search" style="margin-bottom:20px" placeholder="Search recipes…" oninput="renderRecipes()">
+  <div id="recipes-content"></div>
+</div>
+
+<div id="tab-sickday" class="panel">
+  <div class="page-header">
+    <div class="page-title">Sick day <em>comfort</em></div>
+    <div class="page-sub">Under the weather? Here's what to ask for — gentle, healing, easy on the stomach</div>
+  </div>
+  <div class="alert alert-sick" style="margin-bottom:20px">Get well soon! These are all cook-friendly, easy to make, and gentle on a sick body.</div>
+  <div class="sick-grid" id="sick-grid"></div>
+</div>
+
+</main>
+
+<script>
+const SICK_DISHES=[{icon:'🍚',name:'Rasam rice',desc:'Tangy, pepper-forward rasam with soft rice. Clears the sinuses, soothes the throat — Ankita\'s go-to sick day meal.',for:'Cold & cough, fever',recipe:'Boil tomato + tamarind water. Add pepper, cumin, garlic, curry leaves. Pour over soft cooked rice. Drizzle ghee.'},{icon:'🥣',name:'Plain khichdi',desc:'Moong dal and rice cooked soft with ghee and salt. The ultimate comfort when nothing else seems right.',for:'Upset stomach, nausea',recipe:'Pressure cook 1:1 moong dal + rice with 4 cups water, turmeric, salt. Finish with ghee and cumin tempering.'},{icon:'🍵',name:'Turmeric milk',desc:'Warm milk with turmeric, black pepper and honey. The original immunity booster for sore throats.',for:'Sore throat, immunity',recipe:'Heat 1 cup milk. Add ½ tsp turmeric, pinch black pepper, 1 tsp honey. Stir and drink warm.'},{icon:'🍜',name:'Clear chicken soup',desc:'Thin clear broth with shredded chicken, ginger, garlic and pepper. Benjamin-approved and deeply healing.',for:'Cold, fatigue, chills',recipe:'Simmer chicken bones with water, ginger, garlic, pepper, whole spices 45 min. Strain, add shredded chicken and salt.'},{icon:'🫙',name:'Curd rice',desc:'Soft rice mixed with chilled curd and a light tempering of mustard and curry leaves. Cooling and easy.',for:'Fever, acidity, hot days',recipe:'Mix soft cooked rice with curd. Temper mustard + curry leaves + green chilli in ghee. Pour over and mix.'},{icon:'🥬',name:'Moong dal soup',desc:'Thin watery moong dal with turmeric and a light tadka. Very gentle, highly digestible.',for:'Weakness, recovery',recipe:'Cook yellow moong dal very soft. Add turmeric, salt. Light tadka of ghee + cumin + asafoetida.'},{icon:'🫚',name:'Ginger-lemon rasam',desc:'Extra-gingery rasam, thin enough to sip like a broth. Brilliant for congestion.',for:'Congestion, blocked nose',recipe:'Boil water with crushed ginger, peppercorns, cumin, tomato. Strain. Add lemon juice, salt, tsp ghee.'},{icon:'🍞',name:'Bread + boiled egg',desc:'Simple, zero effort, protein and carbs when you have no appetite for anything else.',for:'Any illness, no appetite',recipe:'Boil eggs 9 min. Serve with buttered toast, salt and pepper.'}];
+
+let dishes={
+  breakfast:[
+    {name:'Idli + sambar',tags:['vegetarian'],prep:'',grocery:'urad dal, rice, sambar vegetables, toor dal',recipe:'Soak 1 cup urad dal + 3 cups rice 6 hrs. Grind smooth, ferment overnight. Steam 10-12 min.\nSambar: Cook toor dal, add tamarind water, sambar powder, vegetables, simmer.'},
+    {name:'Dosa + coconut chutney',tags:['vegetarian','needsprep'],prep:'Soak rice & dal the night before. Grind batter and leave to ferment overnight.',grocery:'urad dal, rice, coconut, green chillies',recipe:'Spread batter thin on hot tawa. Drizzle oil. Cook till golden and crisp.\nChutney: Blend coconut, chilli, ginger, salt. Temper with mustard + curry leaves.'},
+    {name:'Pongal + sambar',tags:['vegetarian','highprotein'],prep:'',grocery:'moong dal, rice, ghee, pepper, cumin, cashews',recipe:'Cook moong dal + rice (1:1) with lots of water till very soft.\nTemper with ghee, pepper, cumin, ginger, curry leaves, cashews.'},
+    {name:'Upma',tags:['vegetarian'],prep:'',grocery:'rava, mustard seeds, onions, curry leaves, vegetables',recipe:'Dry roast rava. Sauté mustard, onions, chilli, vegetables. Add water (2:1), salt. Stir in rava, cook 3 min.'},
+    {name:'Rava idli + chutney',tags:['vegetarian'],prep:'',grocery:'rava, curd, eno salt, coconut',recipe:'Mix rava, curd, salt, eno. Rest 5 min. Steam in idli moulds 12 min. Serve with coconut chutney.'},
+    {name:'Egg dosa',tags:['highprotein','needsprep'],prep:'Soak rice & urad dal the night before and grind batter.',grocery:'eggs, dosa batter ingredients',recipe:'Spread dosa batter on tawa. Crack egg on top, spread. Sprinkle salt, pepper. Cover, cook till egg sets.'},
+    {name:'Poha + boiled eggs',tags:['highprotein'],prep:'',grocery:'poha, eggs, onion, peanuts, mustard seeds, turmeric',recipe:'Rinse poha. Temper mustard, curry leaves, onions. Add turmeric, poha, salt, lemon. Top with peanuts. Serve with boiled eggs.'},
+    {name:'Pesarattu + ginger chutney',tags:['vegetarian','highprotein','needsprep'],prep:'Soak green moong dal overnight. Grind batter in the morning before cook arrives.',grocery:'green moong dal, ginger, green chillies',recipe:'Soak moong overnight. Grind with ginger, chilli, cumin, salt. Make thick pancakes on tawa.'},
+    {name:'Oats upma',tags:['vegetarian','highprotein'],prep:'',grocery:'rolled oats, mixed vegetables, mustard seeds, curry leaves',recipe:'Temper mustard, curry leaves, onion, tomato. Add veg, cook. Add oats + water (1:2). Cook 3 min.'},
+    {name:'Paneer paratha',tags:['vegetarian','paneer','highprotein','needsprep'],prep:'Knead wheat dough and prepare spiced paneer filling the night before.',grocery:'paneer, wheat flour, spices, ghee',recipe:'Crumble paneer, mix with chilli, cumin, coriander, salt. Stuff into rolled dough, roll again. Cook on tawa with ghee.'},
+  ],
+  lunch:[
+    {name:'Rice + sambar + poriyal',tags:['vegetarian'],prep:'',grocery:'toor dal, sambar vegetables, seasonal veg for poriyal',recipe:'Sambar with toor dal + tamarind + vegetables. Poriyal: stir-fried veg with coconut and mustard tempering.'},
+    {name:'Chicken curry + rice',tags:['chicken','highprotein','needsprep'],prep:'Marinate chicken with curd, red chilli, turmeric, garam masala the night before.',grocery:'chicken, onions, tomatoes, spices, coconut milk, ginger-garlic',recipe:'Sauté onions golden. Add ginger-garlic, tomatoes, spices. Add marinated chicken, cook 25 min.'},
+    {name:'Paneer masala + rice',tags:['paneer','vegetarian','highprotein'],prep:'',grocery:'paneer, onions, tomatoes, cream, kashmiri chilli',recipe:'Sauté onions, add ginger-garlic, tomatoes, kashmiri chilli. Add paneer + cream. Simmer 5 min.'},
+    {name:'Curd rice + pickle',tags:['vegetarian'],prep:'',grocery:'curd, cooked rice, mustard seeds, curry leaves, pickle',recipe:'Mix warm rice with curd. Temper mustard, dried chilli, curry leaves, ginger. Mix in. Serve with pickle.'},
+    {name:'Egg curry + rice',tags:['highprotein'],prep:'',grocery:'eggs, onions, tomatoes, coconut milk, spices',recipe:'Hard boil eggs. Make onion-tomato gravy. Slit and add eggs. Simmer with coconut milk 5 min.'},
+    {name:'Chicken biryani',tags:['chicken','highprotein','needsprep'],prep:'Marinate chicken overnight. Fry onions and soak basmati the night before.',grocery:'basmati rice, chicken, whole spices, saffron, fried onions, mint, curd',recipe:'Layer par-cooked basmati over marinated chicken. Seal and dum-cook on low heat 25-30 min.'},
+    {name:'Paneer butter masala + rice',tags:['paneer','vegetarian','highprotein'],prep:'',grocery:'paneer, butter, cream, tomatoes, cashews, kasuri methi',recipe:'Blend roasted tomatoes, onion, cashews. Cook in butter with spices. Add paneer + cream. Finish with kasuri methi.'},
+    {name:'Fish curry + rice',tags:['highprotein','needsprep'],prep:'Clean and marinate fish with turmeric and chilli the morning of cooking.',grocery:'fish (pomfret or mackerel), coconut, tamarind, spices',recipe:'Sauté onions, coconut paste, tamarind, chilli. Add water, bring to boil. Slide in fish. Cook 10-12 min gently.'},
+    {name:'Dal + jeera rice',tags:['vegetarian','highprotein'],prep:'',grocery:'toor dal, cumin, ghee, garlic, turmeric',recipe:'Cook toor dal soft. Temper with ghee, cumin, garlic, chilli. Serve with cumin rice.'},
+    {name:'Kootu + rice',tags:['vegetarian'],prep:'',grocery:'chana dal, mixed vegetables, coconut, mustard',recipe:'Cook chana dal + vegetables. Grind coconut with cumin. Mix. Temper with mustard, dried chilli.'},
+    {name:'Rajma chawal',tags:['vegetarian','highprotein','needsprep'],prep:'Soak rajma (kidney beans) overnight.',grocery:'rajma, onions, tomatoes, spices, ginger-garlic',recipe:'Pressure cook soaked rajma. Sauté onions, tomatoes, spices. Add rajma + water, simmer 15 min.'},
+    {name:'Rasam + rice + papad',tags:['vegetarian'],prep:'',grocery:'tamarind, tomato, pepper, cumin, garlic, toor dal',recipe:'Boil tomato + tamarind + pepper + cumin + garlic. Add thin cooked dal. Temper with mustard + dried chilli.'},
+  ],
+  dinner:[
+    {name:'Palak paneer + phulka',tags:['paneer','vegetarian','highprotein'],prep:'',grocery:'spinach, paneer, cream, spices, wheat flour',recipe:'Blanch spinach, blend smooth. Sauté cumin, garlic, ginger. Add purée, spices, paneer, cream. Simmer 5 min.'},
+    {name:'Grilled chicken + salad',tags:['chicken','highprotein','needsprep'],prep:'Marinate chicken breast overnight in olive oil, lemon, garlic, herbs.',grocery:'chicken breast, olive oil, lemon, salad vegetables',recipe:'Grill marinated chicken 6-7 min per side. Rest 3 min. Slice and serve with dressed salad.'},
+    {name:'Paneer tikka + salad',tags:['paneer','vegetarian','highprotein','needsprep'],prep:'Marinate cubed paneer in hung curd and spices 2 hours before dinner.',grocery:'paneer, hung curd, bell peppers, onions, chilli powder, chaat masala',recipe:'Skewer marinated paneer + veg. Grill on high heat till charred. Serve with green chutney + salad.'},
+    {name:'Vegetable khichdi',tags:['vegetarian'],prep:'',grocery:'moong dal, rice, mixed vegetables, ghee, cumin',recipe:'Pressure cook moong dal + rice + vegetables with turmeric, salt. Tadka of ghee + cumin + asafoetida.'},
+    {name:'Egg bhurji + toast',tags:['highprotein'],prep:'',grocery:'eggs, onions, tomatoes, green chilli, butter, bread',recipe:'Scramble eggs with onion, tomato, chilli, coriander, salt + pepper in butter. Serve with buttered toast.'},
+    {name:'Dal tadka + rice',tags:['vegetarian','highprotein'],prep:'',grocery:'toor dal, ghee, cumin, garlic, dried chilli, tomato',recipe:'Cook toor dal soft. Smoky tadka: ghee + cumin + garlic + dried chilli, pour over dal.'},
+    {name:'Chicken soup + bread',tags:['chicken','highprotein'],prep:'',grocery:'chicken pieces, carrot, ginger, garlic, pepper, bread',recipe:'Simmer chicken with vegetables, ginger, garlic, pepper 40 min. Strain broth, shred chicken, season.'},
+    {name:'Paneer fried rice',tags:['paneer','vegetarian','highprotein'],prep:'',grocery:'cooked rice, paneer, soy sauce, vegetables, eggs, spring onion',recipe:'Fry cubed paneer golden. Scramble eggs. Stir-fry veg on high heat. Add rice, soy sauce, salt. Toss.'},
+    {name:'Mixed veg curry + rice',tags:['vegetarian'],prep:'',grocery:'seasonal vegetables, coconut milk, onions, tomatoes, spices',recipe:'Sauté onions, tomatoes, spices. Add veg. Pour coconut milk, simmer 15 min.'},
+    {name:'Rasam + rice (light)',tags:['vegetarian'],prep:'',grocery:'tamarind, tomatoes, pepper, cumin, garlic',recipe:'Light thin rasam. Boil tomato + tamarind with pepper, cumin, garlic, curry leaves. Temper. Pour over rice.'},
+  ]
+};
+
+let currentMenu={};
+let generatingMenu=false;
+
+function switchTab(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function toggleChip(el){
+  const type=el.dataset.type;
+  if(type==='day') el.classList.toggle('on-day');
+  else if(type==='avoid') el.classList.toggle('on-avoid');
+  else el.classList.toggle('on');
+}
+
+function getOnChips(id){
+  return [...document.querySelectorAll('#'+id+' .chip')].filter(c=>c.classList.contains('on')||c.classList.contains('on-avoid')||c.classList.contains('on-day')).map(c=>c.textContent.trim());
+}
+
+function addDish(){
+  const name=document.getElementById('nd-name').value.trim();
+  if(!name)return;
+  const cat=document.getElementById('nd-cat').value;
+  const tags=[];
+  if(document.getElementById('t-veg').checked)tags.push('vegetarian');
+  if(document.getElementById('t-protein').checked)tags.push('highprotein');
+  if(document.getElementById('t-paneer').checked)tags.push('paneer');
+  if(document.getElementById('t-chicken').checked)tags.push('chicken');
+  if(document.getElementById('t-prep').checked)tags.push('needsprep');
+  const prep=document.getElementById('nd-prep').value.trim();
+  const grocery=document.getElementById('nd-grocery').value.trim();
+  const recipe=document.getElementById('nd-recipe').value.trim();
+  dishes[cat].push({name,tags,prep,grocery,recipe});
+  document.getElementById('nd-name').value='';
+  document.getElementById('nd-prep').value='';
+  document.getElementById('nd-grocery').value='';
+  document.getElementById('nd-recipe').value='';
+  ['t-veg','t-protein','t-paneer','t-chicken','t-prep'].forEach(id=>document.getElementById(id).checked=false);
+  renderDishLibrary();
+  refreshWeeklyChips();
+}
+
+function removeDish(cat,idx){
+  dishes[cat].splice(idx,1);
+  renderDishLibrary();
+  refreshWeeklyChips();
+}
+
+function tagHtml(tags){
+  return tags.map(t=>{
+    const cls=t==='vegetarian'?'veg':t==='highprotein'?'protein':t==='paneer'?'paneer':t==='chicken'?'chicken':t==='needsprep'?'prep':'';
+    const label=t==='vegetarian'?'veg':t==='highprotein'?'protein':t==='needsprep'?'needs prep':t;
+    return cls?`<span class="tag tag-${cls}">${label}</span>`:'';
+  }).join('');
+}
+
+function renderDishLibrary(){
+  const el=document.getElementById('dish-library-content');
+  el.innerHTML='';
+  ['breakfast','lunch','dinner'].forEach(cat=>{
+    el.innerHTML+=`<div class="section-label">${cat.charAt(0).toUpperCase()+cat.slice(1)} — ${dishes[cat].length} dishes</div>`;
+    const card=document.createElement('div');
+    card.className='card';card.style.padding='8px 20px';
+    dishes[cat].forEach((d,i)=>{
+      const row=document.createElement('div');
+      row.className='dish-row';
+      row.innerHTML=`<div class="dish-info"><div class="dish-name">${d.name}</div><div>${tagHtml(d.tags)}</div>${d.prep?`<div class="dish-prep-note">Prep: ${d.prep}</div>`:''}</div><button class="btn btn-sm btn-danger" onclick="removeDish('${cat}',${i})">Remove</button>`;
+      card.appendChild(row);
+    });
+    el.appendChild(card);
+  });
+}
+
+function refreshWeeklyChips(){
+  const all=[...dishes.breakfast,...dishes.lunch,...dishes.dinner];
+  ['must-include-wrap','avoid-wrap'].forEach((id,isAvoid)=>{
+    const prev=getOnChips(id);
+    document.getElementById(id).innerHTML=all.map(d=>`<span class="chip${prev.includes(d.name)?(isAvoid?' on-avoid':' on'):''}" data-type="${isAvoid?'avoid':'include'}" onclick="toggleChip(this)">${d.name}</span>`).join('');
+  });
+}
+
+function renderSickDay(){
+  document.getElementById('sick-grid').innerHTML=SICK_DISHES.map(s=>`<div class="sick-card"><div class="sick-icon">${s.icon}</div><div class="sick-name">${s.name}</div><div class="sick-desc">${s.desc}</div><div class="sick-for">Good for: ${s.for}</div>${s.recipe?`<details style="margin-top:10px"><summary style="font-size:12px;color:var(--terracotta);cursor:pointer">Quick method</summary><div style="font-size:12px;color:var(--muted);margin-top:6px;line-height:1.7">${s.recipe}</div></details>`:''}</div>`).join('');
+}
+
+function renderRecipes(){
+  const search=document.getElementById('recipe-search').value.toLowerCase();
+  const all=[...dishes.breakfast,...dishes.lunch,...dishes.dinner];
+  const filtered=all.filter(d=>!search||d.name.toLowerCase().includes(search));
+  document.getElementById('recipes-content').innerHTML=filtered.length?filtered.map(d=>`<div class="recipe-card"><div class="recipe-top"><div class="recipe-name">${d.name}</div><div>${tagHtml(d.tags)}</div></div><div class="recipe-body">${d.recipe||'No recipe saved yet. Edit the dish in your library to add one.'}</div>${d.prep?`<div style="margin-top:10px;padding:10px 14px;background:var(--warm);border-radius:8px;font-size:12px;color:var(--brown)"><strong>Prep needed:</strong> ${d.prep}</div>`:''}</div>`).join(''):'<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">No dishes found</div></div>';
+}
+
+async function generateMenu(){
+  if(generatingMenu)return;
+  generatingMenu=true;
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-menu').classList.add('active');
+  document.querySelectorAll('.nav-tab')[2].classList.add('active');
+  document.getElementById('menu-content').innerHTML=`<div class="loading-state"><div class="spinner"></div><div>Asking AI to plan your week…</div></div>`;
+
+  const mood=document.getElementById('pref-mood').value.trim();
+  const mustInclude=getOnChips('must-include-wrap');
+  const avoid=getOnChips('avoid-wrap');
+  const outsideDays=getOnChips('outside-days');
+  const dishNames={breakfast:dishes.breakfast.map(d=>d.name),lunch:dishes.lunch.map(d=>d.name),dinner:dishes.dinner.map(d=>d.name)};
+
+  const systemPrompt=`You are a smart meal planner for a South Indian household in Bengaluru, India.
+Household: Ankita (loves paneer, health-conscious, gets bored easily) and Benjamin (loves chicken, health-conscious).
+Cook comes Mon-Sat 8-9:30 AM. MAX 4 dishes per day total across all meals. Sunday cook is off.
+Rules:
+1. Max 4 cook dishes per day TOTAL (breakfast+lunch+dinner combined). Shared dishes count once.
+2. No dish appears more than 3 times across the week.
+3. Lunch and dinner must be different each day.
+4. Prefer protein in most meals.
+5. Sunday: all meals = "Outside food", cook_dishes = [].
+6. Be smart: sambar/rasam made once can serve 2 meals (counts as 1 cook dish).
+Available dishes:
+Breakfast: ${dishNames.breakfast.join(', ')}
+Lunch: ${dishNames.lunch.join(', ')}
+Dinner: ${dishNames.dinner.join(', ')}
+Respond ONLY with valid JSON, no markdown, no explanation:
+{"Mon":{"breakfast":"dish","lunch":"dish","dinner":"dish","cook_dishes":["d1","d2","d3"],"outside":false},"Tue":{...},"Wed":{...},"Thu":{...},"Fri":{...},"Sat":{...},"Sun":{"breakfast":"Outside food","lunch":"Outside food","dinner":"Outside food","cook_dishes":[],"outside":true}}
+Use dish names EXACTLY as listed. Use "Outside food" for outside meals.`;
+
+  const userMsg=`Plan this week.\nMood: ${mood||'Varied and healthy'}\nMust include: ${mustInclude.join(', ')||'none'}\nAvoid: ${avoid.join(', ')||'none'}\nOutside days (besides Sunday): ${outsideDays.join(', ')||'none'}`;
+
+  try {
+    // Call our Netlify function instead of Anthropic directly
+    const res=await fetch('/.netlify/functions/generate-menu',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({system:systemPrompt,userMsg})
+    });
+    const data=await res.json();
+    const raw=(data.content?.find(b=>b.type==='text')?.text||'').trim();
+    const clean=raw.replace(/^```(?:json)?/,'').replace(/```$/,'').trim();
+    currentMenu=JSON.parse(clean);
+    renderMenu();renderAlerts();renderGrocery();
+  } catch(e){
+    document.getElementById('menu-content').innerHTML=`<div class="alert alert-warn">Could not generate menu — please try again. Error: ${e.message}</div>`;
+  }
+  generatingMenu=false;
+}
+
+function renderMenu(){
+  const DAYS=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const all=[...dishes.breakfast,...dishes.lunch,...dishes.dinner];
+  const repeatCount={};
+  DAYS.forEach(day=>{const d=currentMenu[day];if(!d)return;['breakfast','lunch','dinner'].forEach(m=>{const dish=d[m];if(!dish||dish==='Outside food')return;repeatCount[dish]=(repeatCount[dish]||0)+1;});});
+  const outsideMeals=DAYS.reduce((n,day)=>n+(currentMenu[day]?.outside?3:0),0);
+  const paneerDays=DAYS.filter(day=>Object.values(currentMenu[day]||{}).some(v=>typeof v==='string'&&v.toLowerCase().includes('paneer'))).length;
+  const chickenDays=DAYS.filter(day=>Object.values(currentMenu[day]||{}).some(v=>typeof v==='string'&&v.toLowerCase().includes('chicken'))).length;
+
+  let html=`<div class="menu-header"><div class="menu-stats"><div class="stat-pill">Outside meals: <strong>${outsideMeals}</strong></div><div class="stat-pill">Paneer days: <strong>${paneerDays}</strong></div><div class="stat-pill">Chicken days: <strong>${chickenDays}</strong></div></div><button class="btn btn-primary btn-sm" onclick="switchTab('weekly',document.querySelectorAll('.nav-tab')[1])">Regenerate ↺</button></div><div class="week-grid">`;
+  DAYS.forEach(day=>{
+    const d=currentMenu[day]||{};
+    const cookDishes=d.cook_dishes||[];
+    const isOutside=d.outside;
+    const count=cookDishes.length;
+    html+=`<div class="day-col${day==='Sun'?' sunday':''}"><div class="day-hd"><span class="day-name">${day}</span>${isOutside?'<span class="day-count" style="color:var(--sage)">off</span>':`<span class="day-count${count>4?' over':''}">${count}/4</span>`}</div>`;
+    ['Breakfast','Lunch','Dinner'].forEach(meal=>{
+      const dish=d[meal.toLowerCase()]||'';
+      const dishObj=all.find(x=>x.name===dish);
+      const isPrep=dishObj?.prep;
+      const isOut=dish==='Outside food';
+      html+=`<div class="meal-block"><div class="meal-type">${meal}</div><div class="meal-dish${isOut?' outside':isPrep?' prep-needed':''}">${dish||'—'}</div>${isPrep?`<div class="cook-tasks-row">Needs prep</div>`:''}</div>`;
+    });
+    if(!isOutside&&cookDishes.length)html+=`<div style="padding:8px 12px;background:var(--warm);border-top:1px solid var(--border)"><div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Cook makes</div>${cookDishes.map(d=>`<div style="font-size:10px;color:var(--brown);padding:1px 0">· ${d}</div>`).join('')}</div>`;
+    html+=`</div>`;
+  });
+  html+=`</div>`;
+  document.getElementById('menu-content').innerHTML=html;
+}
+
+function renderAlerts(){
+  const DAYS=['Mon','Tue','Wed','Thu','Fri','Sat'];
+  const all=[...dishes.breakfast,...dishes.lunch,...dishes.dinner];
+  const alerts=[];
+  DAYS.forEach(day=>{
+    const d=currentMenu[day];if(!d||d.outside)return;
+    const seen=new Set();
+    ['breakfast','lunch','dinner'].forEach(m=>{
+      const dishName=d[m];if(!dishName||dishName==='Outside food'||seen.has(dishName))return;
+      seen.add(dishName);
+      const dishObj=all.find(x=>x.name===dishName);
+      if(dishObj?.prep)alerts.push({day,meal:m,dish:dishName,prep:dishObj.prep});
+    });
+  });
+  const el=document.getElementById('alerts-content');
+  if(!alerts.length){el.innerHTML=`<div class="alert alert-success">No overnight prep needed this week — smooth sailing!</div>`;return;}
+  el.innerHTML=`<div class="alert alert-warn" style="margin-bottom:20px">Plan ahead — these need prep the night before. Do this yourself or ask your maid.</div>`;
+  alerts.forEach(a=>{el.innerHTML+=`<div class="prep-card"><div class="prep-day">${a.day} · ${a.meal}</div><div class="prep-dish">${a.dish}</div><div class="prep-note">${a.prep}</div></div>`;});
+}
+
+function renderGrocery(){
+  const DAYS=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const all=[...dishes.breakfast,...dishes.lunch,...dishes.dinner];
+  const grocerySet=new Set();
+  DAYS.forEach(day=>{const d=currentMenu[day];if(!d)return;['breakfast','lunch','dinner'].forEach(m=>{const dishName=d[m];if(!dishName||dishName==='Outside food')return;const dishObj=all.find(x=>x.name===dishName);if(dishObj?.grocery)dishObj.grocery.split(',').map(g=>g.trim()).filter(Boolean).forEach(g=>grocerySet.add(g));});});
+  const items=[...grocerySet].sort();
+  const el=document.getElementById('grocery-content');
+  if(!items.length){el.innerHTML='<div class="empty-state"><div class="empty-icon">🛒</div><div class="empty-text">Generate a menu first</div></div>';return;}
+  el.innerHTML=`<div class="alert alert-info" style="margin-bottom:16px">${items.length} items needed this week — tap to check off as you buy</div><div class="grocery-grid">${items.map(item=>`<label class="grocery-item"><input type="checkbox" onchange="this.closest('.grocery-item').classList.toggle('checked',this.checked)"><span>${item}</span></label>`).join('')}</div>`;
+}
+
+renderDishLibrary();refreshWeeklyChips();renderSickDay();renderRecipes();
+</script>
+</body>
+</html>
